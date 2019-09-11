@@ -1,0 +1,103 @@
+503 error came if no instance are running or all the instances are failure
+504 gateway or proxy timed out or instance corrctly configured timeout (long time from not received server) ,if TCP differ accept enable
+     	- incrase loadbalancer timeout value
+	-keep alive time must be grater than load balancer ideal time out
+	- enable keep alive setting for load balancer ,keepalive_requests > 100
+401 unauthorized error
+403 missing index file
+404 entering wrong location in url
+400 clent enter wrong url (like given spaces in url) , clint user non loadbalancer supporting tool
+405 entered more than 127 characters
+502 load balancer donot receive response from instant (Insufficient capacity in the load balancer to handle the request.)
+
+
+HTTP 400: Bad Request
+Possible causes:
+
+The client sent a malformed request that does not meet the HTTP specification.
+
+The request header exceeded 16K per request line, 16K per single header, or 64K for the entire header.
+
+HTTP 401: Unauthorized
+You configured a listener rule to authenticate users. Either you configured OnUnauthenticatedRequest to deny unauthenticated users or the IdP denied access.
+
+HTTP 403: Forbidden
+You configured an AWS WAF web access control list (web ACL) to monitor requests to your Application Load Balancer and it blocked a request.
+
+HTTP 405: Method Not Allowed
+The client used the TRACE method, which is not supported by Application Load Balancers.
+
+HTTP 408: Request Timeout
+The client did not send data before the idle timeout period expired. Sending a TCP keep-alive does not prevent this timeout. Send at least 1 byte of data before each idle timeout period elapses. Increase the length of the idle timeout period as needed.
+
+HTTP 413: Payload Too Large
+The target is a Lambda function and the request body exceeds 1 MB.
+
+HTTP 414: URI Too Long
+The request URL or query string parameters are too large.
+
+HTTP 460
+The load balancer received a request from a client, but the client closed the connection with the load balancer before the idle timeout period elapsed.
+
+Check whether the client timeout period is greater than the idle timeout period for the load balancer. Ensure that your target provides a response to the client before the client timeout period elapses, or increase the client timeout period to match the load balancer idle timeout, if the client supports this.
+
+HTTP 463
+The load balancer received an X-Forwarded-For request header with more than 30 IP addresses.
+
+HTTP 500: Internal Server Error
+Possible causes:
+
+You configured an AWS WAF web access control list (web ACL) and there was an error executing the web ACL rules.
+
+You configured a listener rule to authenticate users, but one of the following is true:
+
+The load balancer is unable to communicate with the IdP token endpoint or the IdP user info endpoint. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints. Verify that your VPC has internet access. If you have an internal-facing load balancer, use a NAT gateway to enable internet access.
+
+The size of the claims returned by the IdP exceeded the maximum size supported by the load balancer.
+
+A client submitted an HTTP/1.0 request without a host header, and the load balancer was unable to generate a redirect URL.
+
+A client submitted a request without an HTTP protocol, and the load balancer was unable to generate a redirect URL.
+
+The requested scope doesn't return an ID token.
+
+HTTP 501: Not Implemented
+The load balancer received a Transfer-Encoding header with an unsupported value. The supported values for Transfer-Encoding are chunked and identity. As an alternative, you can use the Content-Encoding header.
+
+HTTP 502: Bad Gateway
+Possible causes:
+
+The load balancer received a TCP RST from the target when attempting to establish a connection.
+
+The load balancer received an unexpected response from the target, such as "ICMP Destination unreachable (Host unreachable)", when attempting to establish a connection. Check whether traffic is allowed from the load balancer subnets to the targets on the target port.
+
+The target closed the connection with a TCP RST or a TCP FIN while the load balancer had an outstanding request to the target. Check whether the keep-alive duration of the target is shorter than the idle timeout value of the load balancer.
+
+The target response is malformed or contains HTTP headers that are not valid.
+
+The load balancer encountered an SSL handshake error or SSL handshake timeout (10 seconds) when connecting to a target.
+
+The deregistration delay period elapsed for a request being handled by a target that was deregistered. Increase the delay period so that lengthy operations can complete.
+
+The target is a Lambda function and the response body exceeds 1 MB.
+
+The target is a Lambda function that did not respond before its configured timeout was reached.
+
+HTTP 503: Service Unavailable
+The target groups for the load balancer have no registered targets.
+
+HTTP 504: Gateway Timeout
+Possible causes:
+
+The load balancer failed to establish a connection to the target before the connection timeout expired (10 seconds).
+
+The load balancer established a connection to the target but the target did not respond before the idle timeout period elapsed.
+
+The network ACL for the subnet did not allow traffic from the targets to the load balancer nodes on the ephemeral ports (1024-65535).
+
+The target returns a content-length header that is larger than the entity body. The load balancer timed out waiting for the missing bytes.
+
+The target is a Lambda function that did not respond before its possible maximum configured timeout was reached.
+
+HTTP 561: Unauthorized
+You configured a listener rule to authenticate users, but the IdP returned an error code when authenticating the user.
